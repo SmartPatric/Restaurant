@@ -1,0 +1,93 @@
+.menu{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+h1{
+    text-align: center;
+}
+
+.dish{
+    padding: 50px 50px 0px;
+    background-size: cover;
+
+    width: inherit;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+img {
+    height: 300px;
+    width: auto;
+}
+
+.order-btn{
+    height: 40px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #555b6e;
+    border-radius: 15px;
+}
+
+.order-btn:hover{
+    background-color: #35416D;
+}
+
+.order-btn a{
+    color: aliceblue;
+    text-align: center;
+    font-size: 20px;
+}
+
+.navigation{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 20px;
+}
+
+.lang{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 15px;
+}
+
+.reg{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.lang *{
+    margin: 0px 10px;
+}
+
+.reg *{
+    margin: 0px 15px;
+}
+
+.paging{
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.paging *{
+    padding: 0px 2%;
+    margin: 0;
+}
+
+.sort p{
+    text-align: center;
+    font-size: 20px;
+}
+
+
+

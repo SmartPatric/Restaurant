@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+
+body{
+    background-color: #bee3db;
+    padding: 20px 100px 100px;
+}
+
+a{
+    text-decoration: none;
+    color: #555b6e;
+}
+
+a:hover{
+    color: #f07167;
+}
+
+h1{
+    font-family: 'Rubik Mono One', sans-serif;
+}
+
+.navigation{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);;
+}
+
