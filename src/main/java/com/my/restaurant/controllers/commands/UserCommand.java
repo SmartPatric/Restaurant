@@ -1,0 +1,33 @@
+package com.my.restaurant.controllers.commands;
+
+import com.my.restaurant.dao.DishesDao;
+import com.my.restaurant.dao.OrdersDao;
+import com.my.restaurant.models.Dishes;
+import com.my.restaurant.models.Orders;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+public class UserCommand implements Command{
+
+    private final DishesDao dishesDao = new DishesDao();
+    private final OrdersDao ordersDao = new OrdersDao();
+
+    @Override
+    public String execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Integer userId = Integer.parseInt(session.getAttribute("userId").toString());
+        System.out.println("user cabinet user id "+userId);
+        Orders order = ordersDao.findOrderByUserId(userId);
+
+        if (order!=null) {
+            System.out.println("Order id "+order.getId());
+            session.setAttribute("orderStatus", order.getStatus());
+            session.setAttribute("totalPrice", order.getTotal());
+            List<Dishes> dishes = dishesDao.findDishesByOrderId(order.getId());
+            session.setAttribute("dishes", dishes);
+        }
+        return "/user/userCabinet.jsp";
+    }
+}
