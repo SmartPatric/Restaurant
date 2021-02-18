@@ -17,7 +17,8 @@
     <title>User Cabinet</title>
 </head>
 <body>
-<h1>UserCabinet</h1>
+<h1><fmt:message key="h.userCabinet"/></h1>
+<a href="${pageContext.request.contextPath}/main"><fmt:message key="h.mainPage"/></a>
 <c:if test="${dishes!=null}">
     <div class="table">
         <table class="user_table">
@@ -47,7 +48,7 @@
     </div>
     <h3>Total: ${totalPrice}</h3>
     <c:if test="${orderStatus=='MAKING'}">
-        <form action="/userCabinet" method="post">
+        <form action="/userCabinet/Post" method="post">
             <input type='hidden' id='pay' name='pay' value='true'>
             <input type="submit" value="Оплатити"/>
         </form>

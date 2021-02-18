@@ -8,43 +8,30 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthFilter implements Filter {
-    private ServletContext context;
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        this.context = filterConfig.getServletContext();
+
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request,
+                         ServletResponse response,
+                         FilterChain filterChain) throws IOException, ServletException {
 
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
+        final HttpServletRequest req = (HttpServletRequest) request;
+        final HttpServletResponse res = (HttpServletResponse) response;
 
-        String uri = req.getRequestURI();
-        //this.context.log("Requested Resource::" + uri);
-        HttpSession session = req.getSession(false);
-        Object role = session.getAttribute("role");
-        //this.context.log("Фильтр аутентификации, пользователь::" + role);
+        HttpSession session = req.getSession();
+        ServletContext context = request.getServletContext();
+        System.out.println(session);
+        System.out.println(session.getAttribute("role"));
+        System.out.println(context.getAttribute("loggedUsers"));
 
-        if (role != null && role.toString().equals("USER") && !(uri.endsWith("admin"))) {
-            //this.context.log("Авторизованный запрос, сессия:: " + session);
-            System.out.println("do auth user");
-            chain.doFilter(request, response);
-            res.sendRedirect("/userCabinet");
-        } else if (role != null && role.toString().equals("ADMIN") && !(uri.endsWith("userCabinet"))) {
-            System.out.println("do auth admin");
-            chain.doFilter(request, response);
-            res.sendRedirect("/admin");
-        } else {
-            System.out.println("not do auth");
-            //this.context.log("Неавторизованный запрос");
-            res.sendRedirect("/login");
-        }
+        filterChain.doFilter(request,response);
     }
 
     @Override
     public void destroy() {
-        //close any resources here
+
     }
 }

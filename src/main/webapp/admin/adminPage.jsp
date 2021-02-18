@@ -34,15 +34,16 @@
 </head>
 <body>
 <ul class="nav nav-tabs">
-    <li><a data-toggle="tab" href="#app">Approving</a></li>
-    <li><a data-toggle="tab" href="#cook">Cooking</a></li>
-    <li><a data-toggle="tab" href="#dell">Delivering</a></li>
-    <li><a data-toggle="tab" href="#closed">Closed</a></li>
-    <li><a data-toggle="tab" href="#can">Canceled</a></li>
+    <li><a class="nav-link active" data-toggle="tab" href="#app">Approving</a></li>
+    <li><a class="nav-link" data-toggle="tab" href="#cook">Cooking</a></li>
+    <li><a class="nav-link" data-toggle="tab" href="#dell">Delivering</a></li>
+    <li><a class="nav-link" data-toggle="tab" href="#closed">Closed</a></li>
+    <li><a class="nav-link" data-toggle="tab" href="#can">Canceled</a></li>
 </ul>
-
+<h1><fmt:message key="h.adminPage"/></h1>
+<a href="${pageContext.request.contextPath}/main"><fmt:message key="h.mainPage"/></a>
 <div class="tab-content">
-    <div id="app" class="tab-pane fade">
+    <div id="app" class="tab-pane fade selected">
         <table class="table">
             <thead>
             <tr>
@@ -62,8 +63,8 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/admin">
-                        <input type='hidden' id='userId1' name='userId' value=${order.userId}>
+                    <td><form method="post" action="/admin/Post">
+                        <input type='hidden' id='userId' name='userId' value=${order.userId}>
                         <input type="submit" value="Next"></form>
                     </td>
                 </tr>
@@ -91,7 +92,7 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/admin">
+                    <td><form method="post" action="/admin/Post">
                         <input type='hidden' id='userId2' name='userId' value=${order.userId}>
                         <input type="submit" value="Next"></form>
                     </td>
@@ -120,7 +121,7 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/admin">
+                    <td><form method="post" action="/admin/Post">
                         <input type='hidden' id='userId3' name='userId' value=${order.userId}>
                         <input type="submit" value="Next"></form>
                     </td>
