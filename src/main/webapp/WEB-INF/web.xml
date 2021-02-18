@@ -30,10 +30,4 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
-  <error-page>
-    <exception-type>java.lang.Exception</exception-type>
-    <location>error.jsp</location>
-  </error-page>
-
-
 </web-app>

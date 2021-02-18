@@ -60,6 +60,8 @@
         }
 
         a {
+            font-size: 14px;
+            margin: 0px 10px;
             color: black;
             text-align: left;
         }
@@ -95,6 +97,7 @@
     <a href="/main?page=${currentPage}&sortField=price&sortDir=${sortDirReversed}&choose=${choose}">Sort by price</a>
     <a href="/main?page=${currentPage}&sortField=name&sortDir=${sortDirReversed}&choose=${choose}">Sort by name</a>
     <br>
+    <a href="/main?page=${currentPage}&sortField=${sortField}&sortDir=${sortDir}&choose=all">All</a>
     <a href="/main?page=${currentPage}&sortField=${sortField}&sortDir=${sortDir}&choose=pizza">Pizza</a>
     <a href="/main?page=${currentPage}&sortField=${sortField}&sortDir=${sortDir}&choose=drink">Drink</a>
     <a href="/main?page=${currentPage}&sortField=${sortField}&sortDir=${sortDir}&choose=dessert">Dessert</a>

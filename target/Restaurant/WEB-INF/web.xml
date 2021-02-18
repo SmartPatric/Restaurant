@@ -5,6 +5,21 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>com.my.restaurant.filters.AuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/**</url-pattern>
+  </filter-mapping>
+
+  <listener>
+    <listener-class>
+      com.my.restaurant.listeners.SessionListener
+    </listener-class>
+  </listener>
+
   <servlet>
     <servlet-name>ServletMain</servlet-name>
     <servlet-class>com.my.restaurant.controllers.Servlet</servlet-class>
@@ -14,20 +29,5 @@
     <servlet-name>ServletMain</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-
-  <listener>
-    <listener-class>
-      com.my.restaurant.listeners.SessionListener
-    </listener-class>
-  </listener>
-
-  <filter>
-    <filter-name>AuthFilter</filter-name>
-    <filter-class>com.my.restaurant.filters.AuthFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>AuthFilter</filter-name>
-    <url-pattern>/**</url-pattern>
-  </filter-mapping>
 
 </web-app>

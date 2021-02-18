@@ -27,7 +27,6 @@
     <style>
         body {
             padding: 30px 100px;
-            text-align: center;
             background-color: #D78B93;
         }
     </style>
