@@ -23,10 +23,10 @@ public class UserCommand implements Command{
 
         if (order!=null) {
             System.out.println("Order id "+order.getId());
-            session.setAttribute("orderStatus", order.getStatus());
-            session.setAttribute("totalPrice", order.getTotal());
+            request.setAttribute("orderStatus", order.getStatus());
+            request.setAttribute("totalPrice", order.getTotal());
             List<Dishes> dishes = dishesDao.findDishesByOrderId(order.getId());
-            session.setAttribute("dishes", dishes);
+            request.setAttribute("dishes", dishes);
         }
         return "/user/userCabinet.jsp";
     }

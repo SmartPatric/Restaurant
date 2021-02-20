@@ -17,15 +17,15 @@ public class AdminCommand implements Command{
         HttpSession session = request.getSession();
 
         List<Orders> orders = ordersDao.findAllOrders("APPROVING");
-        session.setAttribute("orders_app", orders);
+        request.setAttribute("orders_app", orders);
         orders = ordersDao.findAllOrders("COOKING");
-        session.setAttribute("orders_cook", orders);
+        request.setAttribute("orders_cook", orders);
         orders = ordersDao.findAllOrders("DELIVERING");
-        session.setAttribute("orders_dell", orders);
+        request.setAttribute("orders_dell", orders);
         orders = ordersDao.findAllOrders("CLOSED");
-        session.setAttribute("orders_closed", orders);
+        request.setAttribute("orders_closed", orders);
         orders = ordersDao.findAllOrders("CANCELED");
-        session.setAttribute("orders_can", orders);
+        request.setAttribute("orders_can", orders);
 
         return "/admin/adminPage.jsp";
     }

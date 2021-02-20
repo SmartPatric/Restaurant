@@ -6,7 +6,6 @@ import com.my.restaurant.models.Dishes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class MainPageCommand implements Command {
@@ -40,9 +39,6 @@ public class MainPageCommand implements Command {
             System.out.println("inside choose " + choose);
             List<Dishes> chosenDishes = dishesAll.stream().filter(dish -> dish.getCategory().toString().equals(finalChoose.toUpperCase())).collect(Collectors.toList());
             dishesAll = chosenDishes;
-            for (Dishes d : dishesAll) {
-                System.out.println(d.getName());
-            }
         }
 
         int noOfRecords = dishesAll.size();

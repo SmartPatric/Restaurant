@@ -1,25 +1,72 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
 
-body{
-    background-color: #bee3db;
-    padding: 20px 100px 100px;
+body {
+    padding: 30px 100px 50px 100px;
+    text-align: center;
+    background-color: #D78B93;
 }
 
-a{
-    text-decoration: none;
-    color: #555b6e;
+button, input.sbm-btn{
+    border: none;
+    background-color: black;
+    width: 150px;
+    height: 40px;
+    color: white;
+    border-radius: 5px;
 }
 
-a:hover{
-    color: #f07167;
+button:hover, input.sbm-btn:hover {
+    background-color: #282828;
+    color: #D78B93;
 }
 
-h1{
+h1 {
+    text-align: center;
     font-family: 'Rubik Mono One', sans-serif;
 }
 
-.navigation{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);;
+select {
+    border: none;
+    background-color: #efefef;
+    margin: 10px;
+    font-size: 16px;
 }
 
+a {
+    font-size: 18px;
+    margin: 0px 10px;
+    color: black;
+    text-align: left;
+}
+
+a:hover{
+    text-decoration: none;
+    color: aqua;
+}
+
+a:active{
+    text-decoration: none;
+}
+
+span {
+    font-size: 20px;
+    margin: 0px 10px;
+}
+
+option{
+    font-size: 12px;
+}
+
+img{
+    width: 400px;
+    height: 280px;
+    margin: 20px 0px;
+}
+
+.menu{
+    padding: 20px 0px;
+}
+
+.disabled{
+    font-size: 30px;
+}

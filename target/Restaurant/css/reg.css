@@ -1,26 +1,9 @@
-h1{
-    text-align: center;
-}
-
-.sbm-btn{
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-    background-color: #f07167;
-    border: none;
-}
-
-input[type="submit"].sbm-btn:hover{
-    background-color: #ef574e;
-    border: none;
-}
-
 .form{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
 
-form
+.form form
 {
     display: flex;
     flex-direction: column;
@@ -28,15 +11,12 @@ form
     align-items: center;
     margin: 40px;
     padding: 0px 50px;
-    display: flex;
-    justify-content: center;
     width: auto;
     height: 400px;
-    background-color: darkcyan;
+    background-color: #a35761;
     grid-column: 2;
     border-radius: 20px;
-    font-size: 20px;
-    color: aliceblue;
+    color: black;
 }
 
 form input{
@@ -46,36 +26,17 @@ form input{
     border-radius: 5px;
     border: none;
     padding: 5px;
+    background-color: #efefef;
 }
 
 form label{
     align-self: flex-start;
+    font-size: 18px;
+    color: #282828;
 }
 
-
-.navigation{
-    display: grid;
-    grid-template-columns: 6fr 2fr;
-    font-size: 20px;
-}
-
-.lang{
+.nav{
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-end;
-    font-size: 15px;
-}
-
-.tabs{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.lang *{
-    margin: 0px 10px;
-}
-
-.tabs *{
-    margin: 0px 15px;
 }

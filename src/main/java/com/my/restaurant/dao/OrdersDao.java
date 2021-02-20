@@ -102,7 +102,7 @@ public class OrdersDao {
             connection = DbUtil.getConnection();
             preparedStatement = connection.prepareStatement("update orders set status = ? where id = ?");
             Status status =  Status.findStatusById((Status.valueOf(order.getStatus()).getId())+1);
-            System.out.println("change status to next" + status);
+            System.out.println("change status to next " + status);
             preparedStatement.setString(1, status.toString());
             preparedStatement.setInt(2, order.getId());
             preparedStatement.executeUpdate();

@@ -26,13 +26,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <style>
-        body{
-            background-color: mistyrose;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
 </head>
 <body>
+<h1><fmt:message key="h.adminPage"/></h1>
+<a href="${pageContext.request.contextPath}/restaurant/main"><fmt:message key="h.mainPage"/></a>
 <ul class="nav nav-tabs">
     <li><a class="nav-link active" data-toggle="tab" href="#app">Approving</a></li>
     <li><a class="nav-link" data-toggle="tab" href="#cook">Cooking</a></li>
@@ -40,9 +39,7 @@
     <li><a class="nav-link" data-toggle="tab" href="#closed">Closed</a></li>
     <li><a class="nav-link" data-toggle="tab" href="#can">Canceled</a></li>
 </ul>
-<h1><fmt:message key="h.adminPage"/></h1>
-<a href="${pageContext.request.contextPath}/main"><fmt:message key="h.mainPage"/></a>
-<div class="tab-content">
+<div class="tab-content col-lg-12">
     <div id="app" class="tab-pane fade selected">
         <table class="table">
             <thead>
@@ -63,7 +60,7 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/admin/Post">
+                    <td><form method="post" action="/restaurant/admin/Post">
                         <input type='hidden' id='userId' name='userId' value=${order.userId}>
                         <input type="submit" value="Next"></form>
                     </td>
@@ -82,6 +79,7 @@
                 <th>User</th>
                 <th>Creation</th>
                 <th>Last Update</th>
+                <th>Next</th>
             </tr>
             </thead>
             <tbody>
@@ -92,7 +90,7 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/admin/Post">
+                    <td><form method="post" action="/restaurant/admin/Post">
                         <input type='hidden' id='userId2' name='userId' value=${order.userId}>
                         <input type="submit" value="Next"></form>
                     </td>
@@ -111,6 +109,7 @@
                 <th>User</th>
                 <th>Creation</th>
                 <th>Last Update</th>
+                <th>Next</th>
             </tr>
             </thead>
             <tbody>
@@ -121,7 +120,7 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/admin/Post">
+                    <td><form method="post" action="/restaurant/admin/Post">
                         <input type='hidden' id='userId3' name='userId' value=${order.userId}>
                         <input type="submit" value="Next"></form>
                     </td>

@@ -15,10 +15,12 @@
 <html>
 <head>
     <title>User Cabinet</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cabinet.css" />
 </head>
 <body>
 <h1><fmt:message key="h.userCabinet"/></h1>
-<a href="${pageContext.request.contextPath}/main"><fmt:message key="h.mainPage"/></a>
+<a href="${pageContext.request.contextPath}/restaurant/main"><fmt:message key="h.mainPage"/></a>
 <c:if test="${dishes!=null}">
     <div class="table">
         <table class="user_table">
@@ -27,8 +29,6 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Image</th>
-                <th>Description</th>
-                <th>Category</th>
                 <th>Amount</th>
             </tr>
             </thead>
@@ -38,8 +38,6 @@
                     <td>${dish.name}</td>
                     <td>${dish.price}</td>
                     <td>${dish.image}</td>
-                    <td>${dish.description}</td>
-                    <td>${dish.category}</td>
                     <td>${dish.amount}</td>
                 </tr>
             </c:forEach>
@@ -48,7 +46,7 @@
     </div>
     <h3>Total: ${totalPrice}</h3>
     <c:if test="${orderStatus=='MAKING'}">
-        <form action="/userCabinet/Post" method="post">
+        <form action="/restaurant/userCabinet/Post" method="post">
             <input type='hidden' id='pay' name='pay' value='true'>
             <input type="submit" value="Оплатити"/>
         </form>

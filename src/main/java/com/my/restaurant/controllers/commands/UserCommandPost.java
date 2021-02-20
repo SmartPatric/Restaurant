@@ -17,7 +17,7 @@ public class UserCommandPost implements Command{
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(session.getAttribute("userId")==null || !session.getAttribute("userRole").equals("USER")){
-            return "/login";
+            return "/login.jsp";
         }
         Integer userId = Integer.parseInt(session.getAttribute("userId").toString());
         Orders order = ordersDao.findOrderByUserId(userId);
@@ -41,7 +41,6 @@ public class UserCommandPost implements Command{
         else if(request.getParameter("pay").equals("true")){
             ordersDao.payOrder(order.getId());
         }
-        new UserCommand();
-        return "";
+        return "outPostUser";
     }
 }

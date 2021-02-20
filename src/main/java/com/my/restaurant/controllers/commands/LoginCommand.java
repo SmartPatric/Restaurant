@@ -38,7 +38,7 @@ public class LoginCommand implements Command {
                 CommandUtility.setUserRole(request, Role.USER, name);
                 System.out.println("Redirect to user");
             }
-            return "/main.jsp";
+            return "";
         }
         CommandUtility.setUserRole(request, Role.UNKNOWN, name);
         System.out.println("Redirect to login");

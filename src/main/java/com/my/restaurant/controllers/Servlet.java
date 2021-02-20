@@ -47,19 +47,29 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         System.out.println("request URI " + path);
-        if (!path.contains(".css") && !path.contains(".png")) {
-            path = path.replaceAll("/", "");
-        }
+
+        path = path.replaceAll("restaurant", "");
+        path = path.replaceAll("/", "");
+
         System.out.println("request URI after " + path);
 
         Command command = commands.getOrDefault(path,
                 new MainPageCommand());
         System.out.println(command.getClass().getName());
+
+        /////returned string
         String page = command.execute(request);
-        //request.getRequestDispatcher(page).forward(request,response);
-        if (page.contains("/admin") || page.contains("/user")) {
-            response.sendRedirect(page);
-        } else {
+        System.out.println("page " + page);
+
+        if (page.equals("outPostAdmin")) {
+            System.out.println("do red to admin");
+            response.sendRedirect("/restaurant/admin");
+        }
+        else if (page.equals("outPostUser")) {
+            System.out.println("do red to user");
+            response.sendRedirect("/restaurant/userCabinet");
+        }
+        else {
             request.getRequestDispatcher(page).forward(request, response);
         }
     }
