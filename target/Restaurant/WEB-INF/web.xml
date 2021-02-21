@@ -5,15 +5,6 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-  <filter>
-    <filter-name>AuthFilter</filter-name>
-    <filter-class>com.my.restaurant.filters.AuthFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>AuthFilter</filter-name>
-    <url-pattern>/**</url-pattern>
-  </filter-mapping>
-
   <listener>
     <listener-class>
       com.my.restaurant.listeners.SessionListener
@@ -29,5 +20,15 @@
     <servlet-name>ServletMain</servlet-name>
     <url-pattern>/restaurant/*</url-pattern>
   </servlet-mapping>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error.jsp</location>
+  </error-page>
+
+  <error-page>
+    <error-code>500</error-code>
+    <location>/main.jsp</location>
+  </error-page>
 
 </web-app>
