@@ -10,7 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="${param.lang}"/>
+<fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="MyResources"/>
 <html>
 <head>
@@ -26,18 +26,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
 </head>
 <body>
 <h1><fmt:message key="h.adminPage"/></h1>
 <a href="${pageContext.request.contextPath}/restaurant/main"><fmt:message key="h.mainPage"/></a>
 <ul class="nav nav-tabs">
-    <li><a class="nav-link active" data-toggle="tab" href="#app">Approving</a></li>
-    <li><a class="nav-link" data-toggle="tab" href="#cook">Cooking</a></li>
-    <li><a class="nav-link" data-toggle="tab" href="#dell">Delivering</a></li>
-    <li><a class="nav-link" data-toggle="tab" href="#closed">Closed</a></li>
-    <li><a class="nav-link" data-toggle="tab" href="#can">Canceled</a></li>
+    <li><a class="nav-link active" data-toggle="tab" href="#app"><fmt:message key="status.app"/></a></li>
+    <li><a class="nav-link" data-toggle="tab" href="#cook"><fmt:message key="status.cook"/></a></li>
+    <li><a class="nav-link" data-toggle="tab" href="#del"><fmt:message key="status.del"/></a></li>
+    <li><a class="nav-link" data-toggle="tab" href="#clo"><fmt:message key="status.clo"/></a></li>
+    <li><a class="nav-link" data-toggle="tab" href="#can"><fmt:message key="status.can"/></a></li>
 </ul>
 <div class="tab-content col-lg-12">
     <div id="app" class="tab-pane fade selected">
@@ -60,9 +60,11 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/restaurant/admin/Post">
-                        <input type='hidden' id='userId' name='userId' value=${order.userId}>
-                        <input type="submit" value="Next"></form>
+                    <td>
+                        <form method="post" action="/restaurant/admin/Post">
+                            <input type='hidden' id='userId' name='userId' value=${order.userId}>
+                            <input type="submit" value="Next">
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
@@ -90,9 +92,11 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/restaurant/admin/Post">
-                        <input type='hidden' id='userId2' name='userId' value=${order.userId}>
-                        <input type="submit" value="Next"></form>
+                    <td>
+                        <form method="post" action="/restaurant/admin/Post">
+                            <input type='hidden' id='userId2' name='userId' value=${order.userId}>
+                            <input type="submit" value="Next">
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
@@ -100,7 +104,7 @@
         </table>
     </div>
 
-    <div id="dell" class="tab-pane fade">
+    <div id="del" class="tab-pane fade">
         <table class="table">
             <thead>
             <tr>
@@ -120,9 +124,11 @@
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
                     <td>${order.updateDate}</td>
-                    <td><form method="post" action="/restaurant/admin/Post">
-                        <input type='hidden' id='userId3' name='userId' value=${order.userId}>
-                        <input type="submit" value="Next"></form>
+                    <td>
+                        <form method="post" action="/restaurant/admin/Post">
+                            <input type='hidden' id='userId3' name='userId' value=${order.userId}>
+                            <input type="submit" value="Next">
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
@@ -130,7 +136,7 @@
         </table>
     </div>
 
-    <div id="closed" class="tab-pane fade">
+    <div id="clo" class="tab-pane fade">
         <table class="table">
             <thead>
             <tr>

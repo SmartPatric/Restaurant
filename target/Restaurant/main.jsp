@@ -10,7 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="${param.lang}"/>
+<fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="MyResources"/>
 <html lang="en">
 <head>
@@ -30,32 +30,37 @@
 <h1><fmt:message key="h.restaurant"/></h1>
 
 <nav class="nav">
+   <c:if test="${role!='USER' && role!='ADMIN'}">
     <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/login"><fmt:message key="h.login"/></a>
     <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/registration"><fmt:message key="h.registration"/></a>
-    <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/logout"><fmt:message key="h.logout"/></a>
+   </c:if>
+    <c:if test="${role=='USER' || role=='ADMIN'}">
+        <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/logout"><fmt:message key="h.logout"/></a>
+    </c:if>
     <c:if test="${role=='USER'}">
-        <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/userCabinet">User Cabinet</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/userCabinet"><fmt:message key="h.userCabinet"/></a>
     </c:if>
     <c:if test="${role=='ADMIN'}">
-        <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/admin">Admin</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/admin"><fmt:message key="h.adminPage"/></a>
     </c:if>
     <div class="lang">
         <form>
-            <select name="lang" onchange="submit()">
+            <select name="sessionLocale" onchange="submit()">
                 <option value=""><fmt:message key="language.change"/></option>
-                <option value="en" ${language == 'en'}><fmt:message key="language.en"/></option>
-                <option value="uk" ${language == 'uk'}><fmt:message key="language.ua"/></option>
+                <option value="en"><fmt:message key="language.en"/></option>
+                <option value="uk"><fmt:message key="language.ua"/></option>
             </select>
         </form>
     </div>
-    <a href="/restaurant/main?page=${currentPage}&sortField=price&sortDir=${sortDirReversed}&choose=${choose}">Sort by price</a>
-    <a href="/restaurant/main?page=${currentPage}&sortField=name&sortDir=${sortDirReversed}&choose=${choose}">Sort by name</a>
+    <span><fmt:message key="sort"/>:</span>
+    <a href="${pageContext.request.contextPath}/restaurant/main?page=${currentPage}&sortField=price&sortDir=${sortDirReversed}&choose=${choose}"><fmt:message key="sort.price"/></a>
+    <a href="${pageContext.request.contextPath}/restaurant/main?page=${currentPage}&sortField=name&sortDir=${sortDirReversed}&choose=${choose}"><fmt:message key="sort.name"/></a>
     <br>
-    <a href="/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=all">All</a>
-    <a href="/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=pizza">Pizza</a>
-    <a href="/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=drink">Drink</a>
-    <a href="/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=dessert">Dessert</a>
-    <a href="/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=salad">Salad</a>
+    <a href="${pageContext.request.contextPath}/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=all"><fmt:message key="sort.all"/></a>
+    <a href="${pageContext.request.contextPath}/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=pizza"><fmt:message key="sort.pizza"/></a>
+    <a href="${pageContext.request.contextPath}/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=drink"><fmt:message key="sort.drink"/></a>
+    <a href="${pageContext.request.contextPath}/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=dessert"><fmt:message key="sort.dessert"/></a>
+    <a href="${pageContext.request.contextPath}/restaurant/main?page=1&sortField=${sortField}&sortDir=${sortDir}&choose=salad"><fmt:message key="sort.salad"/></a>
 </nav>
 
 <div class="menu">
@@ -68,7 +73,7 @@
                 <form action="/restaurant/userCabinet/Post" method="post">
                     <input type='hidden' id='pay' name='pay' value='false'>
                     <input type='hidden' id='DishId' name='DishId' value='${dish.id}'>
-                    <button type="submit">Buy</button>
+                    <button type="submit"><fmt:message key="but.buy"/></button>
                 </form>
             </div>
         </div>
@@ -79,9 +84,8 @@
     <div class="col-lg-12">
             <%--For displaying Previous link except for the 1st page --%>
         <c:if test="${currentPage != 1}">
-            <span><a href="/restaurant/main?page=${currentPage - 1}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}">Previous</a></span>
+            <span><a href="/restaurant/main?page=${currentPage - 1}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}"><fmt:message key="page.previous"/></a></span>
         </c:if>
-
             <%--For displaying Page numbers.
             The when condition does not display a link for the current page--%>
         <c:forEach begin="1" end="${noOfPages}" var="i">
@@ -94,10 +98,9 @@
                 </c:otherwise>
             </c:choose>
         </c:forEach>
-
             <%--For displaying Next link --%>
         <c:if test="${currentPage < noOfPages}">
-            <span><a href="/restaurant/main?page=${currentPage + 1}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}">Next</a></span>
+            <span><a href="/restaurant/main?page=${currentPage + 1}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}"><fmt:message key="page.next"/></a></span>
         </c:if>
     </div>
 </c:if>

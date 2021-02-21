@@ -12,8 +12,8 @@ import java.util.List;
 public class OrdersDao {
 
     public List<Orders> findAllOrders(String status) {
-        PreparedStatement statement = null;
-        Connection connection = null;
+        PreparedStatement statement;
+        Connection connection;
         List<Orders> orders = new ArrayList<>();
         try {
             connection = DbUtil.getConnection();
@@ -34,9 +34,9 @@ public class OrdersDao {
     }
 
     public Orders findOrderByUserId(Integer id){
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Connection connection = null;
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        Connection connection;
         Orders order = null;
         try{
             connection = DbUtil.getConnection();
@@ -58,11 +58,11 @@ public class OrdersDao {
     }
 
     public Orders createNewOrder(Integer userId){
-        PreparedStatement preparedStatement = null;
-        Connection connection = null;
-        ResultSet idSet = null;
+        PreparedStatement preparedStatement;
+        Connection connection;
+        ResultSet idSet;
         Orders order = new Orders();
-        Integer success = 0;
+        int success = 0;
         order.setUserId(userId);
         try{
             connection = DbUtil.getConnection();
@@ -80,8 +80,8 @@ public class OrdersDao {
     }
 
     public void payOrder(Integer orderId){
-        PreparedStatement preparedStatement = null;
-        Connection connection = null;
+        PreparedStatement preparedStatement;
+        Connection connection;
         ResultSet idSet = null;
         try{
             connection = DbUtil.getConnection();
@@ -93,11 +93,23 @@ public class OrdersDao {
         }
     }
 
+    public void cancelOrder(Integer orderId){
+        PreparedStatement preparedStatement;
+        Connection connection;
+        try{
+            connection = DbUtil.getConnection();
+            preparedStatement = connection.prepareStatement("update orders set status='CANCELED' where id = ?");
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void nextStatus(Integer userId){
         Orders order = findOrderByUserId(userId);
-        PreparedStatement preparedStatement = null;
-        Connection connection = null;
-        ResultSet idSet = null;
+        PreparedStatement preparedStatement;
+        Connection connection;
         try{
             connection = DbUtil.getConnection();
             preparedStatement = connection.prepareStatement("update orders set status = ? where id = ?");

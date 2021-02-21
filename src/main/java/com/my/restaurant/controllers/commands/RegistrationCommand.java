@@ -15,7 +15,7 @@ public class RegistrationCommand implements Command {
         String name = request.getParameter("email");
         String password = request.getParameter("password");
 
-        System.out.println("Registration " + name + " " + password);
+        //System.out.println("Registration " + name + " " + password);
 
         if (name == null || name.equals("") || password == null || password.equals("")) {
             return "/registration.jsp";

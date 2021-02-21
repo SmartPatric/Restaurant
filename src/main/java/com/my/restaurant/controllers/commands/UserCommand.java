@@ -17,17 +17,23 @@ public class UserCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Integer userId = Integer.parseInt(session.getAttribute("userId").toString());
-        System.out.println("user cabinet user id "+userId);
-        Orders order = ordersDao.findOrderByUserId(userId);
+        Object user = session.getAttribute("userId");
+        Object userRole = session.getAttribute("userId");
+        if(user!=null) {
+            Integer userId = Integer.parseInt(user.toString());
+            System.out.println("user cabinet user id " + userId);
+            Orders order = ordersDao.findOrderByUserId(userId);
 
-        if (order!=null) {
-            System.out.println("Order id "+order.getId());
-            request.setAttribute("orderStatus", order.getStatus());
-            request.setAttribute("totalPrice", order.getTotal());
-            List<Dishes> dishes = dishesDao.findDishesByOrderId(order.getId());
-            request.setAttribute("dishes", dishes);
+            if (order != null) {
+                System.out.println("Order id " + order.getId());
+                request.setAttribute("orderStatus", order.getStatus());
+                request.setAttribute("orderId", order.getId());
+                request.setAttribute("totalPrice", order.getTotal());
+                List<Dishes> dishes = dishesDao.findDishesByOrderId(order.getId());
+                request.setAttribute("dishes", dishes);
+            }
+            return "/user/userCabinet.jsp";
         }
-        return "/user/userCabinet.jsp";
+        return "/login.jsp";
     }
 }

@@ -23,18 +23,19 @@ public class UserCommandPost implements Command{
         Orders order = ordersDao.findOrderByUserId(userId);
 
         if (order == null) {
-            System.out.println("creating new order");
+            //System.out.println("creating new order");
             order = ordersDao.createNewOrder(userId);
         } else System.out.println("order exist");
 
         if(request.getParameter("pay").equals("false") && order.getStatus().equals("MAKING")) {
             Object dId = request.getParameter("DishId");
             Integer dishId = Integer.parseInt(dId.toString());
+
             System.out.println("add dish");
             try {
                 ordersDishesDao.createNewOrderDish(order.getId(), dishId, 1);
             } catch (SQLIntegrityConstraintViolationException e) {
-                System.out.println("im here "+order.getId()+" "+dishId);
+                //System.out.println("im here "+order.getId()+" "+dishId);
                 ordersDishesDao.increaseOrderDishAmount(order.getId(), dishId);
             }
         }

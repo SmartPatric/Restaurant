@@ -36,9 +36,8 @@ public class MainPageCommand implements Command {
 
         if (!choose.equals("all")) {
             String finalChoose = choose;
-            System.out.println("inside choose " + choose);
-            List<Dishes> chosenDishes = dishesAll.stream().filter(dish -> dish.getCategory().toString().equals(finalChoose.toUpperCase())).collect(Collectors.toList());
-            dishesAll = chosenDishes;
+            //System.out.println("inside choose " + choose);
+            dishesAll = dishesAll.stream().filter(dish -> dish.getCategory().toString().equals(finalChoose.toUpperCase())).collect(Collectors.toList());
         }
 
         int noOfRecords = dishesAll.size();
@@ -50,7 +49,7 @@ public class MainPageCommand implements Command {
         }
         List<Dishes> dishes = dishesAll.stream()
                 .sorted(comparator)
-                .skip((page - 1) * recordsPerPage)
+                .skip((long) (page - 1) * recordsPerPage)
                 .limit(recordsPerPage)
                 .collect(Collectors.toList());
 

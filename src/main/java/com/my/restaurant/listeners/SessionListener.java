@@ -1,13 +1,21 @@
 package com.my.restaurant.listeners;
 
+import com.my.restaurant.models.Dishes;
+
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
 
+        List<Dishes> dishesList = new ArrayList<>();
+        httpSessionEvent
+                .getSession().getServletContext()
+                .setAttribute("dishesList", dishesList);
     }
 
     @Override
@@ -16,19 +24,11 @@ public class SessionListener implements HttpSessionListener {
         HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
                 .getSession().getServletContext()
                 .getAttribute("loggedUsers");
-        for (String s : loggedUsers) {
-            System.out.println(s);
-        }
+
         String userName = (String) httpSessionEvent.getSession()
                 .getAttribute("userName");
-        System.out.println("///username " + userName);
         loggedUsers.remove(userName);
-        System.out.println("////after remove");
-        for (String s : loggedUsers) {
-            System.out.println(s);
-        }
-        httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
-        System.out.println("////end listener");
 
+        httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
     }
 }

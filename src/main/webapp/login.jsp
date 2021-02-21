@@ -10,7 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="${param.lang}"/>
+<fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="MyResources"/>
 <html>
 <head>
@@ -24,16 +24,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reg.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reg.css"/>
 </head>
 <body>
 <h1><fmt:message key="h.login"/></h1>
 <div class="nav col-lg-12">
-    <span><a href="/restaurant"><fmt:message key="h.mainPage"/></a></span>
+    <span>
+        <a href="/restaurant"><fmt:message key="h.mainPage"/></a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/registration"><fmt:message key="h.registration"/></a>
+    </span>
     <span>
         <form>
-            <select name="lang" onchange="submit()">
+            <select name="sessionLocale" onchange="submit()">
                 <option value=""><fmt:message key="language.change"/></option>
                 <option value="en" ${language == 'en'}><fmt:message key="language.en"/></option>
                 <option value="uk" ${language == 'uk'}><fmt:message key="language.ua"/></option>
@@ -44,6 +47,7 @@
 <div class="form col-lg-12">
     <form name="form" autocomplete="off"
           action="/restaurant/login" method="post">
+        <p>${loginStatus}</p>
         <label text="Login" for="login">Login</label><br>
         <input type="text"
                required
@@ -57,6 +61,7 @@
                name="password"
                required
                placeholder="Password"/>
+        <input type="hidden" id="post" name="post" value="yes">
         <input class="sbm-btn" type="submit" value="Submit"/>
     </form>
 </div>

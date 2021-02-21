@@ -11,7 +11,7 @@ public class AdminCommandPost implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         Integer userID = Integer.parseInt(request.getParameter("userId"));
-        System.out.println("admin post "+ userID);
+        //System.out.println("admin post "+ userID);
         ordersDao.nextStatus(userID);
         return "outPostAdmin";
     }

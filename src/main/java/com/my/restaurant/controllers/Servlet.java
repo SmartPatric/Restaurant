@@ -29,6 +29,8 @@ public class Servlet extends HttpServlet {
         commands.put("adminPost", new AdminCommandPost());
         commands.put("registration", new RegistrationCommand());
         commands.put("main", new MainPageCommand());
+        commands.put("amountChange", new ChangeDishAmountCommand());
+        commands.put("userCancelOrder", new UserCancelOrderCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -61,13 +63,17 @@ public class Servlet extends HttpServlet {
         String page = command.execute(request);
         System.out.println("page " + page);
 
+
         if (page.equals("outPostAdmin")) {
             System.out.println("do red to admin");
             response.sendRedirect("/restaurant/admin");
         }
-        else if (page.equals("outPostUser")) {
+        else if (page.equals("outPostUser") || page.equals("changeUser")) {
             System.out.println("do red to user");
             response.sendRedirect("/restaurant/userCabinet");
+        }
+        else if(page.equals("main")){
+            response.sendRedirect("/restaurant/main");
         }
         else {
             request.getRequestDispatcher(page).forward(request, response);

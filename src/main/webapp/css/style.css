@@ -37,6 +37,7 @@ a {
     margin: 0px 10px;
     color: black;
     text-align: left;
+    text-decoration: none;
 }
 
 a:hover{
@@ -69,4 +70,37 @@ img{
 
 .disabled{
     font-size: 30px;
+}
+
+/*Cabinet User*/
+
+.dish-cab{
+    display: grid;
+    grid-template-columns: 4fr 2fr;
+}
+
+.dish-nav{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.dish-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dish-nav *{
+    width: 1fr;
+}
+
+.dish-cab-form button{
+    width: 50px;
+}
+
+.fa-trash{
+    background-color: #efefef;
+    color: #efefef;
 }
