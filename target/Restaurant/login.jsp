@@ -31,37 +31,37 @@
 <h1><fmt:message key="h.login"/></h1>
 <div class="nav col-lg-12">
     <span>
-        <a href="/restaurant"><fmt:message key="h.mainPage"/></a>
-            <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/registration"><fmt:message key="h.registration"/></a>
+        <a href="${pageContext.request.contextPath}/restaurant/main"><fmt:message key="h.mainPage"/></a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/registration"><fmt:message
+                    key="h.registration"/></a>
     </span>
-    <span>
-        <form>
-            <select name="sessionLocale" onchange="submit()">
-                <option value=""><fmt:message key="language.change"/></option>
-                <option value="en" ${language == 'en'}><fmt:message key="language.en"/></option>
-                <option value="uk" ${language == 'uk'}><fmt:message key="language.ua"/></option>
-            </select>
-        </form>
-    </span>
+    <form>
+        <select name="sessionLocale" onchange="submit()">
+            <option value=""><fmt:message key="language.change"/></option>
+            <option value="en" ${language == 'en'}><fmt:message key="language.en"/></option>
+            <option value="uk" ${language == 'uk'}><fmt:message key="language.ua"/></option>
+        </select>
+    </form>
 </div>
 <div class="form col-lg-12">
     <form name="form" autocomplete="off"
-          action="/restaurant/login" method="post">
+          action="${pageContext.request.contextPath}/restaurant/login/Post" method="post">
         <p>${loginStatus}</p>
-        <label text="Login" for="login">Login</label><br>
+        <fmt:message key="label.login" var="label_log"/>
+        <label text="Login" for="login">${label_log}</label><br>
         <input type="text"
                required
                name="login"
                id="login"
-               placeholder="Login"/>
+               placeholder="${label_log}"/>
         <br>
-        <label text="Password" for="password">Password</label><br>
+        <fmt:message key="label.password" var="label_pass"/>
+        <label text="Password" for="password">${label_pass}</label><br>
         <input type="password"
                id="password"
                name="password"
                required
-               placeholder="Password"/>
-        <input type="hidden" id="post" name="post" value="yes">
+               placeholder="${label_pass}"/>
         <input class="sbm-btn" type="submit" value="Submit"/>
     </form>
 </div>

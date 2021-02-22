@@ -13,6 +13,6 @@ public class AdminCommandPost implements Command{
         Integer userID = Integer.parseInt(request.getParameter("userId"));
         //System.out.println("admin post "+ userID);
         ordersDao.nextStatus(userID);
-        return "outPostAdmin";
+        return "redirect:/admin";
     }
 }

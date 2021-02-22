@@ -23,12 +23,13 @@
 <h1><fmt:message key="h.userCabinet"/></h1>
 <a href="${pageContext.request.contextPath}/restaurant/main"><fmt:message key="h.mainPage"/></a>
 <c:if test="${dishes!=null}">
+    <fmt:message key="list.dishes.currency_course" var="currency_course"/>
     <c:forEach var="dish" items="${dishes}">
         <div class="dish-cab col-lg-12">
             <div class="dish-body">
                 <span><img src="/images/${dish.image}" alt="dish img"/></span>
                 <span>${dish.name}</span>
-                <span>${dish.price}</span>
+                <span><fmt:formatNumber value="${dish.price/currency_course}" maxFractionDigits="2"/> <fmt:message key="currency"/></span>
                 <span>${dish.amount}</span>
             </div>
             <c:if test="${orderStatus=='MAKING'}">
@@ -60,7 +61,8 @@
         </div>
     </c:forEach>
     <c:if test="${dishes.size() > 0}">
-        <h3><fmt:message key="label.total"/>: ${totalPrice}</h3>
+
+        <h3><fmt:message key="label.total"/>: <fmt:formatNumber value="${totalPrice/currency_course}" maxFractionDigits="2"/> <fmt:message key="currency"/></h3>
         <c:if test="${orderStatus=='MAKING'}">
             <form action="${pageContext.request.contextPath}/restaurant/userCabinet/Post" method="post">
                 <input type='hidden' id='pay' name='pay' value='true'>

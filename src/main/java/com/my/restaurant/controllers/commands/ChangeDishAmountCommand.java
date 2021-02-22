@@ -26,7 +26,6 @@ public class ChangeDishAmountCommand implements Command{
             System.out.println("removing dish from order");
             ordersDishesDao.removeOrderDish(orderId, dishId);
         }
-
-        return "changeUser";
+        return "redirect:/userCabinet";
     }
 }

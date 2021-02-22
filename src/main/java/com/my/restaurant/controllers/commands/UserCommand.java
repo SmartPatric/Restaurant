@@ -18,7 +18,7 @@ public class UserCommand implements Command{
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object user = session.getAttribute("userId");
-        Object userRole = session.getAttribute("userId");
+
         if(user!=null) {
             Integer userId = Integer.parseInt(user.toString());
             System.out.println("user cabinet user id " + userId);

@@ -42,6 +42,6 @@ public class UserCommandPost implements Command{
         else if(request.getParameter("pay").equals("true")){
             ordersDao.payOrder(order.getId());
         }
-        return "outPostUser";
+        return "redirect:/userCabinet";
     }
 }

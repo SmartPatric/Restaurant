@@ -14,12 +14,11 @@ public class UserCancelOrderCommand implements Command{
         HttpSession session = request.getSession();
         Integer orderId = Integer.parseInt(request.getParameter("orderId"));
         Integer userId = Integer.parseInt(session.getAttribute("userId").toString());
-        System.out.println("User id "+userId);
-        if(ordersDao.findOrderByUserId(userId).getStatus()=="APPROVING"){
+
+        if(ordersDao.findOrderByUserId(userId).getStatus().equals("APPROVING")){
             ordersDao.cancelOrder(orderId);
         }
-        //System.out.println("cancel order "+orderId);
-        return "changeUser";
+        return "redirect:/userCabinet";
     }
 
 }

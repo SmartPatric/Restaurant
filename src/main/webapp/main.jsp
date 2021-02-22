@@ -68,9 +68,10 @@
         <div class="dish col-lg-4">
             <img src="/images/${dish.image}" alt="dish img"/>
             <h3>${dish.name}</h3>
-            <p>${dish.price}</p>
+            <fmt:message key="list.dishes.currency_course" var="currency_course"/>
+            <p><fmt:formatNumber value="${dish.price/currency_course}" maxFractionDigits="2"/> <fmt:message key="currency"/></p>
             <div class="order-btn">
-                <form action="/restaurant/userCabinet/Post" method="post">
+                <form action="${pageContext.request.contextPath}/restaurant/userCabinet/Post" method="post">
                     <input type='hidden' id='pay' name='pay' value='false'>
                     <input type='hidden' id='DishId' name='DishId' value='${dish.id}'>
                     <button type="submit"><fmt:message key="but.buy"/></button>
@@ -84,7 +85,7 @@
     <div class="col-lg-12">
             <%--For displaying Previous link except for the 1st page --%>
         <c:if test="${currentPage != 1}">
-            <span><a href="/restaurant/main?page=${currentPage - 1}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}"><fmt:message key="page.previous"/></a></span>
+            <span><a href="${pageContext.request.contextPath}/restaurant/main?page=${currentPage - 1}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}"><fmt:message key="page.previous"/></a></span>
         </c:if>
             <%--For displaying Page numbers.
             The when condition does not display a link for the current page--%>
@@ -94,13 +95,13 @@
                     <span class="disabled">${i}</span>
                 </c:when>
                 <c:otherwise>
-                    <span><a href="/restaurant/main?page=${i}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}">${i}</a></span>
+                    <span><a href="${pageContext.request.contextPath}/restaurant/main?page=${i}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}">${i}</a></span>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
             <%--For displaying Next link --%>
         <c:if test="${currentPage < noOfPages}">
-            <span><a href="/restaurant/main?page=${currentPage + 1}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}"><fmt:message key="page.next"/></a></span>
+            <span><a href="${pageContext.request.contextPath}/restaurant/main?page=${currentPage + 1}&sortField=${sortField}&sortDir=${sortDir}&choose=${choose}"><fmt:message key="page.next"/></a></span>
         </c:if>
     </div>
 </c:if>

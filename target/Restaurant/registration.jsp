@@ -31,7 +31,7 @@
 <h1><fmt:message key="h.registration"/></h1>
 <div class="nav col-lg-12">
     <span>
-        <a href="/restaurant"><fmt:message key="h.mainPage"/></a>
+        <a href="${pageContext.request.contextPath}/restaurant/main"><fmt:message key="h.mainPage"/></a>
         <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/login"><fmt:message key="h.login"/></a>
 </span>
     <form>
@@ -44,20 +44,23 @@
 </div>
 <div class="form col-lg-12">
     <form name="form" class="form" autocomplete="off"
-          action="/restaurant/registration" method="post">
-        <label text="Login" for="email">Login</label><br>
+          action="${pageContext.request.contextPath}/restaurant/registration/Post" method="post">
+        <p>${requestScope.registrationStatus}</p>
+        <fmt:message key="label.login" var="label_log"/>
+        <label text="Login" for="login">${label_log}</label><br>
         <input type="text"
                required
-               name="email"
-               id="email"
-               placeholder="Email"/>
+               name="login"
+               id="login"
+               placeholder="${label_log}"/>
         <br>
-        <label text="Password" for="password">Password</label><br>
+        <fmt:message key="label.password" var="label_pass"/>
+        <label text="Password" for="password">${label_pass}</label><br>
         <input type="password"
                id="password"
                name="password"
                required
-               placeholder="Password"/>
+               placeholder="${label_pass}"/>
         <input class="sbm-btn" type="submit" value="Submit"/>
     </form>
 </div>

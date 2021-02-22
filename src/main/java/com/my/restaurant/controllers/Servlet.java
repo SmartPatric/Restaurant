@@ -16,18 +16,17 @@ public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
     public void init(ServletConfig servletConfig) {
-        servletConfig.getServletContext()
-                .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("logout",
-                new LogOutCommand());
-        commands.put("login",
-                new LoginCommand());
+        servletConfig.getServletContext().setAttribute("loggedUsers", new HashSet<String>());
+        commands.put("logout", new LogOutCommand());
+        commands.put("login", new LoginCommand());
+        commands.put("loginPost", new LoginPostCommand());
         commands.put("exception", new ExceptionCommand());
         commands.put("userCabinet", new UserCommand());
         commands.put("userCabinetPost", new UserCommandPost());
         commands.put("admin", new AdminCommand());
         commands.put("adminPost", new AdminCommandPost());
         commands.put("registration", new RegistrationCommand());
+        commands.put("registrationPost", new RegistrationPostCommand());
         commands.put("main", new MainPageCommand());
         commands.put("amountChange", new ChangeDishAmountCommand());
         commands.put("userCancelOrder", new UserCancelOrderCommand());
@@ -63,19 +62,11 @@ public class Servlet extends HttpServlet {
         String page = command.execute(request);
         System.out.println("page " + page);
 
-
-        if (page.equals("outPostAdmin")) {
-            System.out.println("do red to admin");
-            response.sendRedirect("/restaurant/admin");
-        }
-        else if (page.equals("outPostUser") || page.equals("changeUser")) {
-            System.out.println("do red to user");
-            response.sendRedirect("/restaurant/userCabinet");
-        }
-        else if(page.equals("main")){
-            response.sendRedirect("/restaurant/main");
-        }
-        else {
+        if (page.contains("redirect:")) {
+            page = page.replaceAll("redirect:", "");
+            System.out.println("redirect " + "/restaurant" + page);
+            response.sendRedirect("/restaurant" + page);
+        }else {
             request.getRequestDispatcher(page).forward(request, response);
         }
     }
