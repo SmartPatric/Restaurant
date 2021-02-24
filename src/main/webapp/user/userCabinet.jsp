@@ -8,20 +8,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page isELIgnored="false" %>
 
+<%@ taglib uri="/WEB-INF/welcome.tld" prefix="wel" %>
+
+<%@ page isELIgnored="false" %>
 <fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="MyResources"/>
 <html>
 <head>
     <title>User Cabinet</title>
     <meta content="text/html; charset=UTF-8"/>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 </head>
-<body>
+<>
 <h1><fmt:message key="h.userCabinet"/></h1>
 <a href="${pageContext.request.contextPath}/restaurant/main"><fmt:message key="h.mainPage"/></a>
+<wel:greeting name="${name}"/>
+
 <c:if test="${dishes!=null}">
     <fmt:message key="list.dishes.currency_course" var="currency_course"/>
     <c:forEach var="dish" items="${dishes}">
@@ -54,7 +58,7 @@
                         <input type='hidden' id='RemoveDish' name='amountChange' value='remove'>
                         <input type='hidden' id='dishId3' name='dishId' value='${dish.id}'>
                         <input type='hidden' id='orderId3' name='orderId' value='${orderId}'>
-                        <button type="submit"><p><i class="fas fa-trash"></i></p></button>
+                        <button type="submit"><p><i class="fa fa-trash" aria-hidden="true"></i></p></button>
                     </form>
                 </div>
             </c:if>

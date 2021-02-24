@@ -5,11 +5,12 @@ import com.my.restaurant.dao.OrdersDao;
 import com.my.restaurant.models.Dishes;
 import com.my.restaurant.models.Orders;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class UserCommand implements Command{
+public class UserCommand implements Command {
 
     private final DishesDao dishesDao = new DishesDao();
     private final OrdersDao ordersDao = new OrdersDao();
@@ -19,7 +20,10 @@ public class UserCommand implements Command{
         HttpSession session = request.getSession();
         Object user = session.getAttribute("userId");
 
-        if(user!=null) {
+        ServletContext context = request.getServletContext();
+        request.setAttribute("name", context.getAttribute("userName"));
+
+        if (user != null) {
             Integer userId = Integer.parseInt(user.toString());
             System.out.println("user cabinet user id " + userId);
             Orders order = ordersDao.findOrderByUserId(userId);

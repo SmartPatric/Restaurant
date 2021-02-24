@@ -28,7 +28,6 @@
 </head>
 <body>
 <h1><fmt:message key="h.restaurant"/></h1>
-
 <nav class="nav">
    <c:if test="${role!='USER' && role!='ADMIN'}">
     <a class="nav-link" href="${pageContext.request.contextPath}/restaurant/login"><fmt:message key="h.login"/></a>
