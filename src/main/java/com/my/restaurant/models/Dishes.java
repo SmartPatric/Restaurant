@@ -9,6 +9,7 @@ public class Dishes {
     String description;
     Category category;
     Integer amount;
+    Double totalPrice;
 
     public Dishes() {
     }
@@ -20,6 +21,17 @@ public class Dishes {
         this.image = image;
         this.description = description;
         this.category = category;
+    }
+
+    public Dishes(Integer id, String name, Double price, String image, String description, Category category, Integer amount, Double totalPrice) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.image = image;
+        this.description = description;
+        this.category = category;
+        this.amount = amount;
+        this.totalPrice = totalPrice;
     }
 
     public Dishes(Integer id, String name, Double price, String image, String description, Category category, Integer amount) {
@@ -87,5 +99,13 @@ public class Dishes {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

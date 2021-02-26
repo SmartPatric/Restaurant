@@ -17,7 +17,7 @@ public class OrdersDao {
         List<Orders> orders = new ArrayList<>();
         try {
             connection = DbUtil.getConnection();
-            statement =  connection.prepareStatement("SELECT * FROM orders WHERE status = ?;");
+            statement = connection.prepareStatement("SELECT * FROM orders WHERE status = ?;");
             statement.setString(1, status);
             ResultSet resultSet = statement.executeQuery();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -33,12 +33,12 @@ public class OrdersDao {
         return orders;
     }
 
-    public Orders findOrderByUserId(Integer id){
+    public Orders findOrderByUserId(Integer id) {
         PreparedStatement preparedStatement;
         ResultSet resultSet;
         Connection connection;
         Orders order = null;
-        try{
+        try {
             connection = DbUtil.getConnection();
             preparedStatement = connection.prepareStatement("select * from orders where user_id = ? AND status!='CLOSED' AND status != 'CANCELED'");
             preparedStatement.setInt(1, id);
@@ -57,20 +57,20 @@ public class OrdersDao {
         return order;
     }
 
-    public Orders createNewOrder(Integer userId){
+    public Orders createNewOrder(Integer userId) {
         PreparedStatement preparedStatement;
         Connection connection;
         ResultSet idSet;
         Orders order = new Orders();
         int success = 0;
         order.setUserId(userId);
-        try{
+        try {
             connection = DbUtil.getConnection();
             preparedStatement = connection.prepareStatement("insert into orders(user_id) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, userId);
             success = preparedStatement.executeUpdate();
             idSet = preparedStatement.getGeneratedKeys();
-            if(idSet.next()){
+            if (idSet.next()) {
                 order.setId(idSet.getInt(1));
             }
         } catch (SQLException e) {
@@ -79,11 +79,10 @@ public class OrdersDao {
         return (success == 1) ? order : null;
     }
 
-    public void payOrder(Integer orderId){
+    public void payOrder(Integer orderId) {
         PreparedStatement preparedStatement;
         Connection connection;
-        ResultSet idSet = null;
-        try{
+        try {
             connection = DbUtil.getConnection();
             preparedStatement = connection.prepareStatement("update orders set status='APPROVING' where id = ?");
             preparedStatement.setInt(1, orderId);
@@ -93,10 +92,10 @@ public class OrdersDao {
         }
     }
 
-    public void cancelOrder(Integer orderId){
+    public void cancelOrder(Integer orderId) {
         PreparedStatement preparedStatement;
         Connection connection;
-        try{
+        try {
             connection = DbUtil.getConnection();
             preparedStatement = connection.prepareStatement("update orders set status='CANCELED' where id = ?");
             preparedStatement.setInt(1, orderId);
@@ -106,17 +105,34 @@ public class OrdersDao {
         }
     }
 
-    public void nextStatus(Integer userId){
+    public void nextStatus(Integer userId) {
         Orders order = findOrderByUserId(userId);
         PreparedStatement preparedStatement;
         Connection connection;
-        try{
+        try {
             connection = DbUtil.getConnection();
             preparedStatement = connection.prepareStatement("update orders set status = ? where id = ?");
-            Status status =  Status.findStatusById((Status.valueOf(order.getStatus()).getId())+1);
+            Status status = Status.findStatusById((Status.valueOf(order.getStatus()).getId()) + 1);
             System.out.println("change status to next " + status);
             preparedStatement.setString(1, status.toString());
             preparedStatement.setInt(2, order.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changePrice(boolean add, Double price, Integer orderId) {
+        PreparedStatement preparedStatement;
+        Connection connection;
+        try {
+            connection = DbUtil.getConnection();
+            if (add) {
+                preparedStatement = connection.prepareStatement("update orders set total = total + ? where id = ?");
+            } else preparedStatement = connection.prepareStatement("update orders set total = total - ? where id = ?");
+
+            preparedStatement.setDouble(1, price);
+            preparedStatement.setInt(2, orderId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

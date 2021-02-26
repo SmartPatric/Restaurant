@@ -13,6 +13,6 @@ public class WelcomeTag extends SimpleTagSupport {
 
     @Override
     public void doTag() throws IOException {
-        getJspContext().getOut().write("<<<" + name + ">>>");
+        getJspContext().getOut().write("<p style='font-size:30px'>*** " + name + " ***</p>");
     }
 }

@@ -9,17 +9,16 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 public class OrdersDishesDao {
 
-    public OrdersDishes createNewOrderDish(Integer orderId, Integer dishId, Integer amount) throws SQLIntegrityConstraintViolationException{
+    public OrdersDishes createNewOrderDish(Integer orderId, Integer dishId) throws SQLIntegrityConstraintViolationException{
         PreparedStatement preparedStatement;
         Connection connection;
-        OrdersDishes orderDish = new OrdersDishes(orderId, dishId, amount);
+        OrdersDishes orderDish = new OrdersDishes(orderId, dishId, 1);
         int success = 0;
         try{
             connection = DbUtil.getConnection();
-            preparedStatement = connection.prepareStatement("insert into orders_dishes (order_id, dish_id, amount) VALUES (?, ?, ?)");
+            preparedStatement = connection.prepareStatement("insert into orders_dishes (order_id, dish_id, amount) VALUES (?, ?, 1)");
             preparedStatement.setInt(1, orderId);
             preparedStatement.setInt(2, dishId);
-            preparedStatement.setInt(3, amount);
             success = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             if (e.getClass().equals(SQLIntegrityConstraintViolationException.class)){
@@ -72,24 +71,4 @@ public class OrdersDishesDao {
         }
     }
 
-/*    public List<OrdersDishes> findOrderDishesByOrderId(Integer orderId){
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Connection connection = null;
-        List<OrdersDishes> orderDishes = new ArrayList<>();
-        try{
-            connection = DbUtil.getConnection();
-            preparedStatement = connection.prepareStatement("select * from orders_dishes where order_id = ?");
-            preparedStatement.setInt(1, orderId);
-
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                orderDishes.add(new OrdersDishes(resultSet.getInt(1), resultSet.getInt(2),
-                        resultSet.getInt(3)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orderDishes;
-    }*/
 }

@@ -25,7 +25,6 @@ public class UserCommand implements Command {
 
         if (user != null) {
             Integer userId = Integer.parseInt(user.toString());
-            System.out.println("user cabinet user id " + userId);
             Orders order = ordersDao.findOrderByUserId(userId);
 
             if (order != null) {

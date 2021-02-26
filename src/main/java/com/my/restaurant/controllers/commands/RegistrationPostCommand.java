@@ -1,5 +1,6 @@
 package com.my.restaurant.controllers.commands;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.my.restaurant.dao.UsersDao;
 import com.my.restaurant.models.Users;
 
@@ -15,20 +16,17 @@ public class RegistrationPostCommand implements Command{
         String password = request.getParameter("password");
 
         if (name == null || name.equals("") || password == null || password.equals("")) {
-            request.setAttribute("registrationStatus", "Enter login and password");
             return "redirect:/registration?status=noData";
         }
 
-        Users user = new Users();
-        user.setEmail(name);
-        user.setPassword(password);
-
         if (usersDao.validate(name, password) != null) {
-            request.setAttribute("registrationStatus", "User exists");
             return "redirect:/registration?status=exist";
         } else {
+            Users user = new Users();
+            user.setEmail(name);
+            user.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
             if (usersDao.insertUser(user) > 0) {
-                return "/login.jsp";
+                return "redirect:/login";
             }
             return "redirect:/main";
         }

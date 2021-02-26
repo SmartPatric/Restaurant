@@ -30,6 +30,12 @@ public class Servlet extends HttpServlet {
         commands.put("main", new MainPageCommand());
         commands.put("amountChange", new ChangeDishAmountCommand());
         commands.put("userCancelOrder", new UserCancelOrderCommand());
+
+/*        String prefix = getServletContext().getRealPath("/");
+        String filename = getInitParameter("init_log4j");
+        if (filename != null) {
+            PropertyConfigurator.configure(prefix + filename);
+        }*/
     }
 
     public void doGet(HttpServletRequest request,

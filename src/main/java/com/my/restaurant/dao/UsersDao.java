@@ -1,5 +1,6 @@
 package com.my.restaurant.dao;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.my.restaurant.models.Users;
 
 import java.sql.*;
@@ -61,22 +62,22 @@ public class UsersDao {
         Connection connection;
         Users user = null;
         // System.out.println("validate before"+email+" "+password);
-
         try {
             connection = DbUtil.getConnection();
-            preparedStatement = connection.prepareStatement("select * from users where email = ? && password = ?");
+            preparedStatement = connection.prepareStatement("select * from users where email = ?");
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
 
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                //System.out.println("im inside");
                 user = new Users(resultSet.getInt(1), resultSet.getString(2),
                         resultSet.getString(3), resultSet.getBoolean(4), resultSet.getString(5));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        if(user!= null && BCrypt.verifyer().verify(password.toCharArray(), user.getPassword()).verified){
+            return user;
+        }
+        return null;
     }
 }

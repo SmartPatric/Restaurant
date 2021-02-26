@@ -7,7 +7,7 @@ import com.my.restaurant.models.Users;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class LoginPostCommand implements Command{
+public class LoginPostCommand implements Command {
 
     private final UsersDao usersDao = new UsersDao();
 
@@ -29,11 +29,11 @@ public class LoginPostCommand implements Command{
         Users user = usersDao.validate(name, password);
         if (user != null) {
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(2 * 60);
             session.setAttribute("userName", user.getEmail());
             session.setAttribute("userId", user.getId());
             session.setAttribute("userRole", user.getRole());
             session.setAttribute("userActive", user.isActive());
-            System.out.println("is active "+user.isActive());
             if (user.getRole().equals("ADMIN") && user.isActive()) {
                 System.out.println("login as admin");
                 CommandUtility.setUserRole(request, Role.ADMIN, name);
@@ -46,7 +46,6 @@ public class LoginPostCommand implements Command{
             }
             return "redirect:/main";
         } else {
-            CommandUtility.setUserRole(request, Role.UNKNOWN, name);
             return "redirect:/login?status=no";
         }
     }

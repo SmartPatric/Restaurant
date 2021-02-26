@@ -36,7 +36,6 @@ public class MainPageCommand implements Command {
 
         if (!choose.equals("all")) {
             String finalChoose = choose;
-            //System.out.println("inside choose " + choose);
             dishesAll = dishesAll.stream().filter(dish -> dish.getCategory().toString().equals(finalChoose.toUpperCase())).collect(Collectors.toList());
         }
 

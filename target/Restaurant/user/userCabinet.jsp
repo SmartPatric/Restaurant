@@ -20,11 +20,11 @@
     <meta content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user.css"/>
 </head>
-<>
 <h1><fmt:message key="h.userCabinet"/></h1>
 <a href="${pageContext.request.contextPath}/restaurant/main"><fmt:message key="h.mainPage"/></a>
-<wel:greeting name="${name}"/>
+<wel:greeting  name="${name}"/>
 
 <c:if test="${dishes!=null}">
     <fmt:message key="list.dishes.currency_course" var="currency_course"/>
@@ -35,6 +35,7 @@
                 <span>${dish.name}</span>
                 <span><fmt:formatNumber value="${dish.price/currency_course}" maxFractionDigits="2"/> <fmt:message key="currency"/></span>
                 <span>${dish.amount}</span>
+                <span>${dish.totalPrice/currency_course} <fmt:message key="currency"/></span>
             </div>
             <c:if test="${orderStatus=='MAKING'}">
                 <div class="dish-nav">
@@ -42,6 +43,7 @@
                           method="post">
                         <input type='hidden' id='amountIncrease' name='amountChange' value='plus'>
                         <input type='hidden' id='dishId1' name='dishId' value='${dish.id}'>
+                        <input type='hidden' id='dishPrice1' name='dishPrice' value='${dish.price}'>
                         <input type='hidden' id='orderId1' name='orderId' value='${orderId}'>
                         <button type="submit">+</button>
                     </form>
@@ -49,6 +51,7 @@
                           method="post">
                         <input type='hidden' id='amountDecrease' name='amountChange' value='minus'>
                         <input type='hidden' id='dishId2' name='dishId' value='${dish.id}'>
+                        <input type='hidden' id='dishPrice2' name='dishPrice' value='${dish.price}'>
                         <input type='hidden' id='orderId2' name='orderId' value='${orderId}'>
                         <input type='hidden' id='dishAmount' name='dishAmount' value='${dish.amount}'>
                         <button type="submit">-</button>
@@ -57,6 +60,7 @@
                           method="post">
                         <input type='hidden' id='RemoveDish' name='amountChange' value='remove'>
                         <input type='hidden' id='dishId3' name='dishId' value='${dish.id}'>
+                        <input type='hidden' id='dishPrice3' name='dishPrice' value='${dish.totalPrice}'>
                         <input type='hidden' id='orderId3' name='orderId' value='${orderId}'>
                         <button type="submit"><p><i class="fa fa-trash" aria-hidden="true"></i></p></button>
                     </form>
