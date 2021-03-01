@@ -35,7 +35,7 @@
                 <span>${dish.name}</span>
                 <span><fmt:formatNumber value="${dish.price/currency_course}" maxFractionDigits="2"/> <fmt:message key="currency"/></span>
                 <span>${dish.amount}</span>
-                <span>${dish.totalPrice/currency_course} <fmt:message key="currency"/></span>
+                <span><fmt:formatNumber value="${dish.totalPrice/currency_course}" maxFractionDigits="2"/> <fmt:message key="currency"/></span>
             </div>
             <c:if test="${orderStatus=='MAKING'}">
                 <div class="dish-nav">
@@ -72,8 +72,7 @@
 
         <h3><fmt:message key="label.total"/>: <fmt:formatNumber value="${totalPrice/currency_course}" maxFractionDigits="2"/> <fmt:message key="currency"/></h3>
         <c:if test="${orderStatus=='MAKING'}">
-            <form action="${pageContext.request.contextPath}/restaurant/userCabinet/Post" method="post">
-                <input type='hidden' id='pay' name='pay' value='true'>
+            <form action="${pageContext.request.contextPath}/restaurant/userCabinet/Pay" method="post">
                 <button type="submit"><fmt:message key="but.pay"/></button>
             </form>
         </c:if>

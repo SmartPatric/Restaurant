@@ -1,6 +1,9 @@
 package com.my.restaurant.controllers;
 
 import com.my.restaurant.controllers.commands.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -12,8 +15,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+/**
+ * Main servlet that contains mapping for commands
+ *
+ * @author - Mariia Shaiko
+ * @version - 1.0
+ */
+
 public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
+    private static final Logger logger = LogManager.getLogger(Servlet.class);
 
     public void init(ServletConfig servletConfig) {
         servletConfig.getServletContext().setAttribute("loggedUsers", new HashSet<String>());
@@ -30,19 +41,14 @@ public class Servlet extends HttpServlet {
         commands.put("main", new MainPageCommand());
         commands.put("amountChange", new ChangeDishAmountCommand());
         commands.put("userCancelOrder", new UserCancelOrderCommand());
+        commands.put("userCabinetPay", new PayOrderCommand());
 
-/*        String prefix = getServletContext().getRealPath("/");
-        String filename = getInitParameter("init_log4j");
-        if (filename != null) {
-            PropertyConfigurator.configure(prefix + filename);
-        }*/
     }
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws IOException, ServletException {
         processRequest(request, response);
-        //response.getWriter().print("Hello from servlet");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -52,27 +58,26 @@ public class Servlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        logger.info("Servlet start");
+
         String path = request.getRequestURI();
-        System.out.println("request URI " + path);
+        logger.info("request URI " + path);
 
         path = path.replaceAll("restaurant", "");
         path = path.replaceAll("/", "");
-
-        System.out.println("request URI after " + path);
 
         Command command = commands.getOrDefault(path,
                 new MainPageCommand());
         System.out.println(command.getClass().getName());
 
-        /////returned string
         String page = command.execute(request);
-        System.out.println("page " + page);
 
         if (page.contains("redirect:")) {
             page = page.replaceAll("redirect:", "");
-            System.out.println("redirect " + "/restaurant" + page);
+            logger.info("redirect to page " + page);
             response.sendRedirect("/restaurant" + page);
-        }else {
+        } else {
+            logger.info("forward to page " + page);
             request.getRequestDispatcher(page).forward(request, response);
         }
     }

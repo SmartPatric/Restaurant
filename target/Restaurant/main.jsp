@@ -71,7 +71,6 @@
             <p><fmt:formatNumber value="${dish.price/currency_course}" maxFractionDigits="2"/> <fmt:message key="currency"/></p>
             <div class="order-btn">
                 <form action="${pageContext.request.contextPath}/restaurant/userCabinet/Post" method="post">
-                    <input type='hidden' id='pay' name='pay' value='false'>
                     <input type='hidden' id='DishId' name='DishId' value='${dish.id}'>
                     <button type="submit"><fmt:message key="but.buy"/></button>
                 </form>

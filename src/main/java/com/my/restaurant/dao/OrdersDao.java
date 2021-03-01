@@ -8,9 +8,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Orders DAO - table orders
+ * @author - Mariia Shaiko
+ * @version - 1.0
+ */
 
 public class OrdersDao {
 
+    /** find order list by status
+     * @return list or orders */
     public List<Orders> findAllOrders(String status) {
         PreparedStatement statement;
         Connection connection;
@@ -33,6 +40,8 @@ public class OrdersDao {
         return orders;
     }
 
+    /** find order by user id
+     * @return order object or null if it doesn't exist*/
     public Orders findOrderByUserId(Integer id) {
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -57,6 +66,9 @@ public class OrdersDao {
         return order;
     }
 
+    /** create new order
+     * default status is MAKING
+     * @return created order object*/
     public Orders createNewOrder(Integer userId) {
         PreparedStatement preparedStatement;
         Connection connection;
@@ -79,6 +91,9 @@ public class OrdersDao {
         return (success == 1) ? order : null;
     }
 
+    /** pay order
+     * change order status to APPROVING
+     * */
     public void payOrder(Integer orderId) {
         PreparedStatement preparedStatement;
         Connection connection;
@@ -92,6 +107,9 @@ public class OrdersDao {
         }
     }
 
+    /** cancel order
+     * change order status to CANCELED
+     * */
     public void cancelOrder(Integer orderId) {
         PreparedStatement preparedStatement;
         Connection connection;
@@ -105,6 +123,14 @@ public class OrdersDao {
         }
     }
 
+    /** set order status to next
+     *     MAKING(0),
+     *     APPROVING(1),
+     *     COOKING(2),
+     *     DELIVERING(3),
+     *     CLOSED(4),
+     *     CANCELED(5);
+     * */
     public void nextStatus(Integer userId) {
         Orders order = findOrderByUserId(userId);
         PreparedStatement preparedStatement;
@@ -122,6 +148,9 @@ public class OrdersDao {
         }
     }
 
+    /** change order price
+     * add or subtract price from total order price
+     * */
     public void changePrice(boolean add, Double price, Integer orderId) {
         PreparedStatement preparedStatement;
         Connection connection;

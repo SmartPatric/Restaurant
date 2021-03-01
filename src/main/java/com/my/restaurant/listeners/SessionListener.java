@@ -7,6 +7,12 @@ import javax.servlet.http.HttpSessionListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+/**
+ * Locale filter
+ * @brief set locale to session
+ * @author - Mariia Shaiko
+ * @version - 1.0
+ */
 
 public class SessionListener implements HttpSessionListener {
     @Override

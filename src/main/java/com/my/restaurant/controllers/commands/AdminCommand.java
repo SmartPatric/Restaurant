@@ -2,17 +2,28 @@ package com.my.restaurant.controllers.commands;
 
 import com.my.restaurant.dao.OrdersDao;
 import com.my.restaurant.models.Orders;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * Servlet for getting admin page
+ * @author - Mariia Shaiko
+ * @version - 1.0
+ */
+
+
 public class AdminCommand implements Command{
 
     private final OrdersDao ordersDao = new OrdersDao();
+    private static final Logger logger = LogManager.getLogger(AdminCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
+        logger.info("Opening admin page");
 
         HttpSession session = request.getSession();
         if(session.getAttribute("role")!=null) {
@@ -30,6 +41,8 @@ public class AdminCommand implements Command{
 
             return "/admin/adminPage.jsp";
         }
+        logger.info("End admin command");
+
         return "/login.jsp";
     }
 }

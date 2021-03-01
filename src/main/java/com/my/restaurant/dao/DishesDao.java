@@ -6,9 +6,17 @@ import com.my.restaurant.models.Dishes;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Dishes DAO - table dishes
+ * @author - Mariia Shaiko
+ * @version - 1.0
+ */
 
 public class DishesDao {
 
+    /** return list of all dishes from BD
+     * @return list of dishes
+     * */
     public List<Dishes> findAllDishes() {
         Statement statement = null;
         Connection connection = null;
@@ -29,10 +37,9 @@ public class DishesDao {
         return dishes;
     }
 
-
-    //select * from dishes d join orders_dishes od on d.id = od.dish_id join orders o on o.id = od.order_id where
-    //o.id = 41;
-
+    /** return list of all dishes of order
+     * @return list of dishes
+     * */
     public List<Dishes> findDishesByOrderId(Integer orderId) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -57,15 +64,11 @@ public class DishesDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-/*        for (Dishes d : dishes) {
-            System.out.println("//new dish");
-            System.out.println("Dish \n id" + d.getId() + "\n name " + d.getName() + "\n price " + d.getPrice()
-            +"\n amount" + d.getAmount() + "\n totalPrice "+ d.getTotalPrice());
-        }*/
         return dishes;
     }
 
-
+    /** return dish by id
+     * @return dish object */
     public Dishes findDishByDishId(Integer dishId) {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

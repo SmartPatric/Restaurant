@@ -2,16 +2,32 @@ package com.my.restaurant.controllers.commands;
 
 import com.my.restaurant.dao.DishesDao;
 import com.my.restaurant.models.Dishes;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Main page command
+ * @brief page with dish list
+ * pagination is implemented through page
+ * sort is implemented through sortField, sortDir
+ * categories are implemented through choose
+ * @author - Mariia Shaiko
+ * @version - 1.0
+ */
+
 public class MainPageCommand implements Command {
+    static final Logger logger = LogManager.getLogger(MainPageCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
+        logger.info("\nStart main page command");
+
         int page = 1;
         int recordsPerPage = 9;
         String sortField = "name";
@@ -20,15 +36,19 @@ public class MainPageCommand implements Command {
 
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
+            logger.info("   -page " + page);
         }
         if (request.getParameter("sortField") != null) {
             sortField = request.getParameter("sortField");
+            logger.info("   -sort field " + sortField);
         }
         if (request.getParameter("sortDir") != null) {
             sortDir = request.getParameter("sortDir");
+            logger.info("   -sort dir " + sortDir);
         }
         if (request.getParameter("choose") != null) {
             choose = request.getParameter("choose");
+            logger.info("   -category " + choose);
         }
 
         DishesDao dishesDao = new DishesDao();
@@ -59,6 +79,7 @@ public class MainPageCommand implements Command {
         request.setAttribute("sortDir", sortDir);
         request.setAttribute("sortDirReversed", sortDir.equals("asc") ? "desc" : "asc");
         request.setAttribute("choose", choose);
+        logger.info("End main page command\n");
 
         return "/main.jsp";
     }

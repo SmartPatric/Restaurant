@@ -6,9 +6,13 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+/**
+ * Util for getting connection
+ * @author - Mariia Shaiko
+ * @version - 1.0
+ */
 
 public class DbUtil {
-
     static Connection connection = null;
 
     static {
