@@ -22,7 +22,7 @@ public class DishesDao {
         Connection connection = null;
         List<Dishes> dishes = new ArrayList<>();
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();;
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM dishes;");
             while (resultSet.next()) {
@@ -46,7 +46,7 @@ public class DishesDao {
         Connection connection = null;
         List<Dishes> dishes = new ArrayList<>();
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("select d.id, d.name, d.price, d.image, d.description, d.category, " +
                     "od.amount, od.total_dish " +
                     "from dishes d join orders_dishes od on d.id = od.dish_id " +
@@ -75,7 +75,7 @@ public class DishesDao {
         Connection connection = null;
         Dishes dish = null;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             statement = connection.prepareStatement("SELECT * FROM dishes where id = ?;");
             statement.setInt(1, dishId);
             resultSet = statement.executeQuery();

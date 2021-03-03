@@ -24,7 +24,7 @@ public class OrdersDishesDao {
         OrdersDishes orderDish = new OrdersDishes(orderId, dishId, 1);
         int success = 0;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("insert into orders_dishes (order_id, dish_id, amount) VALUES (?, ?, 1)");
             preparedStatement.setInt(1, orderId);
             preparedStatement.setInt(2, dishId);
@@ -43,7 +43,7 @@ public class OrdersDishesDao {
         PreparedStatement preparedStatement;
         Connection connection;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("update orders_dishes set amount = amount+1 where order_id = ? AND dish_id = ?");
             preparedStatement.setInt(1, orderId);
             preparedStatement.setInt(2, dishId);
@@ -58,7 +58,7 @@ public class OrdersDishesDao {
         PreparedStatement preparedStatement;
         Connection connection;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("update orders_dishes set amount = amount-1 where order_id = ? AND dish_id = ?");
             preparedStatement.setInt(1, orderId);
             preparedStatement.setInt(2, dishId);
@@ -73,7 +73,7 @@ public class OrdersDishesDao {
         PreparedStatement preparedStatement;
         Connection connection;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("delete from orders_dishes where dish_id = ? and order_id = ?");
             preparedStatement.setInt(1, dishId);
             preparedStatement.setInt(2, orderId);

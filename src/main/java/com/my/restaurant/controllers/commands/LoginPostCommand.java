@@ -39,7 +39,7 @@ public class LoginPostCommand implements Command {
         if (user != null) {
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(2 * 60);
-            session.setAttribute("userName", user.getEmail());
+            session.setAttribute("userName", user.getLogin());
             session.setAttribute("userId", user.getId());
             session.setAttribute("userRole", user.getRole());
             session.setAttribute("userActive", user.isActive());

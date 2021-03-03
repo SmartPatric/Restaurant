@@ -48,7 +48,7 @@
                 <th>Status</th>
                 <th>User</th>
                 <th>Creation</th>
-                <th>Last Update</th>
+                <th>Price</th>
                 <th>Next</th>
             </tr>
             </thead>
@@ -59,7 +59,7 @@
                     <td>${order.status}</td>
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
-                    <td>${order.updateDate}</td>
+                    <td>${order.total}</td>
                     <td>
                         <form method="post" action="/restaurant/admin/Post">
                             <input type='hidden' id='userId' name='userId' value=${order.userId}>
@@ -80,7 +80,7 @@
                 <th>Status</th>
                 <th>User</th>
                 <th>Creation</th>
-                <th>Last Update</th>
+                <th>Price</th>
                 <th>Next</th>
             </tr>
             </thead>
@@ -91,7 +91,7 @@
                     <td>${order.status}</td>
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
-                    <td>${order.updateDate}</td>
+                    <td>${order.total}</td>
                     <td>
                         <form method="post" action="/restaurant/admin/Post">
                             <input type='hidden' id='userId2' name='userId' value=${order.userId}>
@@ -112,7 +112,7 @@
                 <th>Status</th>
                 <th>User</th>
                 <th>Creation</th>
-                <th>Last Update</th>
+                <th>Price</th>
                 <th>Next</th>
             </tr>
             </thead>
@@ -123,7 +123,7 @@
                     <td>${order.status}</td>
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
-                    <td>${order.updateDate}</td>
+                    <td>${order.total}</td>
                     <td>
                         <form method="post" action="/restaurant/admin/Post">
                             <input type='hidden' id='userId3' name='userId' value=${order.userId}>
@@ -144,7 +144,7 @@
                 <th>Status</th>
                 <th>User</th>
                 <th>Creation</th>
-                <th>Last Update</th>
+                <th>Price</th>
             </tr>
             </thead>
             <tbody>
@@ -154,7 +154,7 @@
                     <td>${order.status}</td>
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
-                    <td>${order.updateDate}</td>
+                    <td>${order.total}</td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -169,7 +169,7 @@
                 <th>Status</th>
                 <th>User</th>
                 <th>Creation</th>
-                <th>Last Update</th>
+                <th>Price</th>
             </tr>
             </thead>
             <tbody>
@@ -179,7 +179,7 @@
                     <td>${order.status}</td>
                     <td>${order.userId}</td>
                     <td>${order.creationDate}</td>
-                    <td>${order.updateDate}</td>
+                    <td>${order.total}</td>
                 </tr>
             </c:forEach>
             </tbody>

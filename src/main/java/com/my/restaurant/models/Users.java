@@ -25,11 +25,11 @@ public class Users {
         this.role = role;
     }
 
-    public String getEmail() {
+    public String getLogin() {
         return login;
     }
 
-    public void setEmail(String login) {
+    public void setLogin(String login) {
         this.login = login;
     }
 

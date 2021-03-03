@@ -23,7 +23,7 @@ public class OrdersDao {
         Connection connection;
         List<Orders> orders = new ArrayList<>();
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             statement = connection.prepareStatement("SELECT * FROM orders WHERE status = ?;");
             statement.setString(1, status);
             ResultSet resultSet = statement.executeQuery();
@@ -48,7 +48,7 @@ public class OrdersDao {
         Connection connection;
         Orders order = null;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("select * from orders where user_id = ? AND status!='CLOSED' AND status != 'CANCELED'");
             preparedStatement.setInt(1, id);
 
@@ -77,7 +77,7 @@ public class OrdersDao {
         int success = 0;
         order.setUserId(userId);
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("insert into orders(user_id) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, userId);
             success = preparedStatement.executeUpdate();
@@ -98,7 +98,7 @@ public class OrdersDao {
         PreparedStatement preparedStatement;
         Connection connection;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("update orders set status='APPROVING' where id = ?");
             preparedStatement.setInt(1, orderId);
             preparedStatement.executeUpdate();
@@ -114,7 +114,7 @@ public class OrdersDao {
         PreparedStatement preparedStatement;
         Connection connection;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("update orders set status='CANCELED' where id = ?");
             preparedStatement.setInt(1, orderId);
             preparedStatement.executeUpdate();
@@ -136,7 +136,7 @@ public class OrdersDao {
         PreparedStatement preparedStatement;
         Connection connection;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("update orders set status = ? where id = ?");
             Status status = Status.findStatusById((Status.valueOf(order.getStatus()).getId()) + 1);
             System.out.println("change status to next " + status);
@@ -155,7 +155,7 @@ public class OrdersDao {
         PreparedStatement preparedStatement;
         Connection connection;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             if (add) {
                 preparedStatement = connection.prepareStatement("update orders set total = total + ? where id = ?");
             } else preparedStatement = connection.prepareStatement("update orders set total = total - ? where id = ?");

@@ -21,17 +21,13 @@ public class UsersDao {
         Connection connection = null;
         int result = 0;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("insert into users (email, password) values " +
                     "(?, ?);");
-            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
 
-            System.out.println(preparedStatement);
-
             result = preparedStatement.executeUpdate();
-            System.out.println(result);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,7 +43,7 @@ public class UsersDao {
         Connection connection;
         Users user = null;
         try {
-            connection = DbUtil.getConnection();
+            connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("select * from users where email = ?");
             preparedStatement.setString(1, email);
 

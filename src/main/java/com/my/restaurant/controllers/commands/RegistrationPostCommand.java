@@ -35,7 +35,7 @@ public class RegistrationPostCommand implements Command{
             return "redirect:/registration?status=exist";
         } else {
             Users user = new Users();
-            user.setEmail(name);
+            user.setLogin(name);
             user.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
             if (usersDao.insertUser(user) > 0) {
                 logger.info("new user registered");
