@@ -14,25 +14,26 @@ import java.sql.SQLException;
 
 /**
  * Util for getting connection
- *
  * @author - Mariia Shaiko
  * @version - 1.0
  */
 
 public class DbUtil {
-    private static final Logger log = LogManager.getLogger(DbUtil.class);
 
     private static DbUtil instance;
     private boolean isTest;
+    private static final Logger log = LogManager.getLogger(DbUtil.class);
 
-    public DbUtil(boolean test) {
-        this.isTest = test;
+    private DbUtil() {
     }
 
-    public DbUtil() {
-
+    private DbUtil(boolean isTest) {
+        this.isTest = isTest;
     }
 
+    /**
+     * Return the instance of DBManager
+     */
     public static DbUtil getInstance() {
         if (instance == null) {
             instance = new DbUtil();
@@ -40,23 +41,25 @@ public class DbUtil {
         return instance;
     }
 
-    public static DbUtil getInstance(boolean test) {
-        if (instance == null) {
-            instance = new DbUtil(test);
-        }
+    public void getTest(){
+        System.out.println("is test "+isTest);
+    }
+
+    /**
+     * Return the instance of DBManager
+     * @param isTest is used for test.
+     */
+    public static DbUtil getInstance(boolean isTest) {
+        instance = new DbUtil(isTest);
         return instance;
     }
 
-
-    public void getTest() {
-        System.out.println("test" + isTest);
-    }
-
+    /**
+     * Return connection for database according to the isTest value;
+     */
     public Connection getConnection() {
         Context context;
         Connection connection = null;
-
-        System.out.println("is test " + isTest);
         if (isTest) {
             return getConnectionForTests();
         }
@@ -66,13 +69,15 @@ public class DbUtil {
             connection = ds.getConnection();
             log.info("Get connection by pool");
         } catch (NamingException | SQLException e) {
-            log.error("Error connecting to pool ", e);
+            log.error("Error while connection pooling ", e);
         }
         return connection;
     }
 
-
-    private static Connection getConnectionForTests() {
+    /**
+     * Return connection for test database.
+     */
+    private Connection getConnectionForTests() {
         Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
@@ -88,5 +93,6 @@ public class DbUtil {
         return connection;
 
     }
+
 
 }

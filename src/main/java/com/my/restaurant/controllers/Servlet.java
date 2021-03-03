@@ -68,8 +68,6 @@ public class Servlet extends HttpServlet {
 
         Command command = commands.getOrDefault(path,
                 new MainPageCommand());
-        System.out.println(command.getClass().getName());
-
         String page = command.execute(request);
 
         if (page.contains("redirect:")) {

@@ -38,7 +38,7 @@ public class LoginPostCommand implements Command {
         Users user = usersDao.validate(name, password);
         if (user != null) {
             HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(2 * 60);
+            session.setMaxInactiveInterval(5 * 60);
             session.setAttribute("userName", user.getLogin());
             session.setAttribute("userId", user.getId());
             session.setAttribute("userRole", user.getRole());

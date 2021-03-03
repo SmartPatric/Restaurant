@@ -2,7 +2,11 @@ package com.my.restaurant.dao;
 
 import com.my.restaurant.models.Orders;
 import com.my.restaurant.models.Status;
+import com.my.restaurant.models.Users;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,18 +19,19 @@ import java.util.List;
  */
 
 public class OrdersDao {
+    private static final Logger logger = LogManager.getLogger(OrdersDao.class);
 
     /** find order list by status
      * @return list or orders */
     public List<Orders> findAllOrders(String status) {
-        PreparedStatement statement;
-        Connection connection;
+        PreparedStatement preparedStatement = null;
+        Connection connection= null;
         List<Orders> orders = new ArrayList<>();
         try {
             connection = DbUtil.getInstance().getConnection();
-            statement = connection.prepareStatement("SELECT * FROM orders WHERE status = ?;");
-            statement.setString(1, status);
-            ResultSet resultSet = statement.executeQuery();
+            preparedStatement = connection.prepareStatement("SELECT * FROM orders WHERE status = ?;");
+            preparedStatement.setString(1, status);
+            ResultSet resultSet = preparedStatement.executeQuery();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             while (resultSet.next()) {
                 orders.add(new Orders(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3),
@@ -35,7 +40,14 @@ public class OrdersDao {
                         resultSet.getDouble(6)));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred" + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                logger.error("Error closing connection" + e);
+            }
         }
         return orders;
     }
@@ -43,15 +55,14 @@ public class OrdersDao {
     /** find order by user id
      * @return order object or null if it doesn't exist*/
     public Orders findOrderByUserId(Integer id) {
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
-        Connection connection;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
         Orders order = null;
         try {
             connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("select * from orders where user_id = ? AND status!='CLOSED' AND status != 'CANCELED'");
             preparedStatement.setInt(1, id);
-
             resultSet = preparedStatement.executeQuery();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             if (resultSet.next()) {
@@ -61,7 +72,15 @@ public class OrdersDao {
                         resultSet.getDouble(6));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred" + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+                resultSet.close();
+            } catch (SQLException e) {
+                logger.error("Error closing connection" + e);
+            }
         }
         return order;
     }
@@ -70,9 +89,9 @@ public class OrdersDao {
      * default status is MAKING
      * @return created order object*/
     public Orders createNewOrder(Integer userId) {
-        PreparedStatement preparedStatement;
-        Connection connection;
-        ResultSet idSet;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet idSet = null;
         Orders order = new Orders();
         int success = 0;
         order.setUserId(userId);
@@ -86,7 +105,15 @@ public class OrdersDao {
                 order.setId(idSet.getInt(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred" + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+                idSet.close();
+            } catch (SQLException e) {
+                logger.error("Error closing connection" + e);
+            }
         }
         return (success == 1) ? order : null;
     }
@@ -95,15 +122,22 @@ public class OrdersDao {
      * change order status to APPROVING
      * */
     public void payOrder(Integer orderId) {
-        PreparedStatement preparedStatement;
-        Connection connection;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
             connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("update orders set status='APPROVING' where id = ?");
             preparedStatement.setInt(1, orderId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred" + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                logger.error("Error closing connection" + e);
+            }
         }
     }
 
@@ -111,15 +145,22 @@ public class OrdersDao {
      * change order status to CANCELED
      * */
     public void cancelOrder(Integer orderId) {
-        PreparedStatement preparedStatement;
-        Connection connection;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
             connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("update orders set status='CANCELED' where id = ?");
             preparedStatement.setInt(1, orderId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred" + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                logger.error("Error closing connection" + e);
+            }
         }
     }
 
@@ -133,18 +174,24 @@ public class OrdersDao {
      * */
     public void nextStatus(Integer userId) {
         Orders order = findOrderByUserId(userId);
-        PreparedStatement preparedStatement;
-        Connection connection;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
             connection = DbUtil.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("update orders set status = ? where id = ?");
             Status status = Status.findStatusById((Status.valueOf(order.getStatus()).getId()) + 1);
-            System.out.println("change status to next " + status);
             preparedStatement.setString(1, status.toString());
             preparedStatement.setInt(2, order.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred" + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                logger.error("Error closing connection" + e);
+            }
         }
     }
 
@@ -152,8 +199,8 @@ public class OrdersDao {
      * add or subtract price from total order price
      * */
     public void changePrice(boolean add, Double price, Integer orderId) {
-        PreparedStatement preparedStatement;
-        Connection connection;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
             connection = DbUtil.getInstance().getConnection();
             if (add) {
@@ -164,7 +211,39 @@ public class OrdersDao {
             preparedStatement.setInt(2, orderId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred" + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                logger.error("Error closing connection" + e);
+            }
         }
+    }
+
+
+    /** delete user from DB
+     **/
+    public Integer deleteOrder(Integer userId) {
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        int result = 0;
+        try {
+            connection = DbUtil.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement("delete from orders where user_id = ?");
+            preparedStatement.setInt(1, userId);
+            result = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("SQL exception occurred" + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                logger.error("Error closing connection" + e);
+            }
+        }
+        return result;
     }
 }
